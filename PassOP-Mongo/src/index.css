@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@layer components {
+  .mycontainer {
+    @apply container px-4 py-8 mx-auto;
+    @apply sm:px-6 md:px-12 lg:px-24 xl:px-40;
+    @apply sm:py-10 md:py-12 lg:py-16;
+  }
+}
+
+/* Toast custom theme to match site colors (green / purple accents) */
+.toastify-container .Toastify__toast--success {
+  background: linear-gradient(90deg, #e6f9f0 0%, #dff3ea 100%);
+  border-left: 6px solid #16a34a; /* green */
+  color: #064e3b;
+}
+.toastify-container .Toastify__toast--error {
+  background: linear-gradient(90deg, #fff1f2 0%, #ffe6e9 100%);
+  border-left: 6px solid #dc2626; /* red */
+  color: #7f1d1d;
+}
+.toastify-container .Toastify__toast--info {
+  background: linear-gradient(90deg, #f0f4ff 0%, #eef4ff 100%);
+  border-left: 6px solid #7c3aed; /* purple */
+  color: #312e81;
+}
+
+.toastify-container .Toastify__toast {
+  box-shadow: 0 6px 18px rgba(16, 24, 40, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 600;
+}
+
+.toast-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.toast-success-icon {
+  background: #16a34a;
+  color: white;
+}
+.toast-error-icon {
+  background: #dc2626;
+  color: white;
+}
+.toast-info-icon {
+  background: #7c3aed;
+  color: white;
+}
+
+/* Smaller text body in toasts */
+.toast-body {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Warning toast (used for delete confirmation) */
+.toastify-container .Toastify__toast--warning {
+  background: linear-gradient(90deg, #fff7ed 0%, #fff1e6 100%);
+  border-left: 6px solid #f97316; /* orange */
+  color: #7c2d12;
+}
+
+/* Ensure toast container sits above other UI and is opaque */
+.toastify-container {
+  z-index: 9999;
+}
+
+.toastify-container .Toastify__toast {
+  opacity: 1 !important;
+}
