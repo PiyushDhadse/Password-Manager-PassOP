@@ -158,7 +158,7 @@ Would you like me to generate a **flow diagram** showing how data flows in both 
 
 | Layer       | Technology              |
 |-------------|--------------------------|
-| Frontend    | React, Vite, JSX, CSS    |
+| Frontend    | React, Vite, JSX, TailwindCSS    |
 | Backend     | Node.js, Express (MongoDB mode) |
 | Database    | MongoDB Compass          |
 | Storage     | localStorage or MongoDB  |
