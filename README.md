@@ -52,7 +52,7 @@ PASSOP-MONGO/ │ ├── backend/                  # Backend (MongoDB mode on
 
 | Layer       | Technology              |
 |-------------|--------------------------|
-| Frontend    | React, Vite, JSX, CSS    |
+| Frontend    | React, Vite, JSX, TailwindCSS    |
 | Backend     | Node.js, Express (MongoDB mode) |
 | Database    | MongoDB Compass          |
 | Storage     | localStorage or MongoDB  |
