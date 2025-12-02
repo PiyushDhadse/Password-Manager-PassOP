@@ -31,14 +31,10 @@ const port = 3000;
 app.use(express.json());
 app.use(cors());
 
-// Helper function to get database (ensures connection is ready)
+// Helper function to get database (MongoDB driver v7 maintains connection pool automatically)
 async function getDatabase() {
   try {
-    // Check if client is connected
-    if (!client.topology || !client.topology.isConnected()) {
-      await client.connect();
-      console.log("Connected to MongoDB");
-    }
+    // MongoDB driver v7 automatically manages connections, just return the db instance
     return client.db(dbName);
   } catch (error) {
     console.error("Database connection error:", error);
@@ -87,8 +83,13 @@ app.delete("/", async (req, res) => {
 
     let deleteResult;
     if (id) {
-      // Delete by ObjectId when id provided
-      deleteResult = await collection.deleteOne({ _id: ObjectId(id) });
+      // Delete by ObjectId when id provided (use new ObjectId for MongoDB driver v7)
+      try {
+        deleteResult = await collection.deleteOne({ _id: new ObjectId(id) });
+      } catch (idError) {
+        // If ObjectId conversion fails, return error
+        return res.status(400).json({ error: "Invalid ID format" });
+      }
     } else {
       // Fallback: try to delete by document fields
       deleteResult = await collection.deleteOne(rest);
@@ -107,13 +108,15 @@ app.delete("/", async (req, res) => {
     console.log("Connected to MongoDB");
     console.log(`Database name: ${dbName}`);
 
-    // Verify connection by listing databases
-    const adminDb = client.db().admin();
-    const databases = await adminDb.listDatabases();
-    console.log(
-      "Available databases:",
-      databases.databases.map((db) => db.name)
-    );
+    // Verify connection by pinging the database
+    try {
+      await client.db(dbName).command({ ping: 1 });
+      console.log(`Successfully connected to database: ${dbName}`);
+    } catch (pingError) {
+      console.warn(
+        "Warning: Could not ping database, but connection established"
+      );
+    }
 
     app.listen(port, () => {
       console.log(`Server listening on port http://localhost:${port}`);
